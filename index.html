@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="fr">
-<link rel="manifest" href="manifest.json">
-<script>
-  if('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js');
-  }
-</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Infinity Clicker</title>
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
     <style>
         body {
             margin: 0; height: 100vh; display: flex; flex-direction: column;
@@ -43,8 +43,11 @@
         function increment(e) {
             count++;
             counterElement.innerText = count.toString();
-            localStorage.setItem('score', count.toString()); // Sauvegarde auto
-            createClickEffect(e.clientX || e.touches[0].clientX, e.clientY || e.touches[0].clientY);
+            localStorage.setItem('score', count.toString());
+            
+            let x = e.clientX || (e.touches && e.touches[0].clientX) || window.innerWidth/2;
+            let y = e.clientY || (e.touches && e.touches[0].clientY) || window.innerHeight/2;
+            createClickEffect(x, y);
         }
 
         function createClickEffect(x, y) {
